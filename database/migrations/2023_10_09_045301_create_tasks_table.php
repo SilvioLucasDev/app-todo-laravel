@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,11 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title', 100);
-            $table->string('color', 30)->default('$FFFFFF');
+            $table->string('description', 100);
+            $table->dateTime('due_date');
             $table->foreignIdFor(User::class)->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreignIdFor(Category::class)->references('id')->on('categories')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
@@ -26,9 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table) {
             $table->dropForeignIdFor(User::class);
+            $table->dropForeignIdFor(Category::class);
         });
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('tasks');
     }
 };
