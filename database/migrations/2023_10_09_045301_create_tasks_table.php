@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_done')->default(false);
             $table->string('title', 100);
             $table->string('description', 100);
             $table->dateTime('due_date');
