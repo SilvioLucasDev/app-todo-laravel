@@ -31,7 +31,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = $request->only(['title', 'due_date', 'category_id', 'description']);
+        $task = $request->only('title', 'due_date', 'category_id', 'description');
         $task['user_id'] = 1;
         Task::create($task);
 
@@ -70,7 +70,7 @@ class TaskController extends Controller
         if (! $task) {
             return 'Tarefa não encontrada';
         }
-        $data = $request->only(['title', 'due_date', 'category_id', 'description']);
+        $data = $request->only('title', 'due_date', 'category_id', 'description');
         $data['is_done'] = $request->is_done ? true : false;
         $task->update($data);
 
