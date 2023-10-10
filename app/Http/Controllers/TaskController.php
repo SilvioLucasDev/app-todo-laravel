@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -19,7 +21,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $categories = Category::all();
+
+        return view('tasks.create', ['categories' => $categories]);
     }
 
     /**
@@ -27,7 +31,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = $request->only(['title', 'due_date', 'category_id', 'description']);
+        $task['user_id'] = 1;
+        Task::create($task);
+
+        return redirect(route('home.index'));
     }
 
     /**
@@ -43,7 +51,14 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        return view('tasks.edit');
+        $task = Task::find($id);
+        if (! $task) {
+            return redirect(route('home.index'));
+        }
+
+        $categories = Category::all();
+
+        return view('tasks.edit', ['task' => $task, 'categories' => $categories]);
     }
 
     /**
@@ -51,7 +66,15 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $task = Task::find($id);
+        if (! $task) {
+            return 'Tarefa não encontrada';
+        }
+        $data = $request->only(['title', 'due_date', 'category_id', 'description']);
+        $data['is_done'] = $request->is_done ? true : false;
+        $task->update($data);
+
+        return redirect(route('home.index'));
     }
 
     /**
@@ -59,6 +82,12 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        dd($id);
+        $task = Task::find($id);
+        if (! $task) {
+            return 'Tarefa não encontrada';
+        }
+        $task->delete();
+
+        return redirect(route('home.index'));
     }
 }
