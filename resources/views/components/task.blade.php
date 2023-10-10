@@ -10,10 +10,10 @@
     </div>
 
     <div class="actions">
-        <a href="http://localhost:8000/taks/delete/{{ $data['id'] ?? '' }}">
+        <a href="{{ route('task.edit', $data['id'] ?? '') }}">
             <img src="{{ Vite::asset('resources/images/icon-edit.png') }}" alt="ícone Editar">
         </a>
-        <a href="http://localhost:8000/taks/edit/{{ $data['id'] ?? '' }}">
+        <a href="{{ route('task.destroy', $data['id'] ?? '') }}">
             <img src="{{ Vite::asset('resources/images/icon-delete.png') }}" alt="ícone Deletar">
         </a>
     </div>
