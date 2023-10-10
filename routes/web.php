@@ -26,5 +26,8 @@ Route::get('/tasks/{id}/edit', [TaskController::class, 'edit'])->name('task.edit
 Route::match(['put', 'patch'], '/tasks/{id}', [TaskController::class, 'update'])->name('task.update');
 Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('task.destroy');
 
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('/login', [AuthController::class, 'login_action'])->name('auth.login_action');
+Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
+Route::post('/register', [AuthController::class, 'register_action'])->name('auth.register_action');
+Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
