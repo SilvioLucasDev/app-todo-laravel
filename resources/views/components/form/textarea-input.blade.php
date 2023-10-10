@@ -4,5 +4,5 @@
     </label>
 
     <textarea id="{{ $name }}" name="{{ $name }}" placeholder="{{ $placeholder ?? '' }}"
-        {{ empty($required) ? '' : 'required' }}></textarea>
+        {{ empty($required) ? '' : 'required' }}>{{ !empty($value) ? $value : '' }}</textarea>
 </div>
