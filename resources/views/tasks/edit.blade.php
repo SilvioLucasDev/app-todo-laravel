@@ -36,7 +36,7 @@
 
             <x-form.form-button type="reset">
                 <x-form.button type="reset">
-                    Reetar
+                    Limpar
                 </x-form.button>
 
                 <x-form.button type="submit">
