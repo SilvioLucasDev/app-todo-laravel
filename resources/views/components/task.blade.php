@@ -1,4 +1,4 @@
-<div class="task">
+<div class="task {{ $data['is_done'] ? 'task_done' : 'task_pending' }}">
     <div class="title">
         <form id="form_edit_{{ $data['id'] ?? '' }}" method="post" action="{{ route('task.update', $data['id'] ?? '') }}">
             @csrf

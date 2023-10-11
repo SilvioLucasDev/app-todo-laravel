@@ -14,9 +14,13 @@
             <h2>Progresso do Dia</h2>
             <div class="graph_header-line"></div>
             <div class="graph_header-date">
-                <img src="{{ Vite::asset('resources/images/icon-prev.png') }}" alt="Ícone Voltar">
-                13 de Dez
-                <img src="{{ Vite::asset('resources/images/icon-next.png') }}" alt="Ícone Avançar">
+                <a href="{{ route('home.index', ['date' => $date_prev_button]) }}">
+                    <img src="{{ Vite::asset('resources/images/icon-prev.png') }}" alt="Ícone Voltar">
+                </a>
+                {{ $date_as_string }}
+                <a href="{{ route('home.index', ['date' => $date_next_button]) }}">
+                    <img src="{{ Vite::asset('resources/images/icon-next.png') }}" alt="Ícone Avançar">
+                </a>
             </div>
         </div>
 
@@ -32,8 +36,10 @@
 
     <section class="list">
         <div class="list_header">
-            <select class="list_header-select">
-                <option value="1">Todas as tarefas</option>
+            <select class="list_header-select" onchange="changeStatusFilter(this)">
+                <option value="all_task">Todas as tarefas</option>
+                <option value="task_pending">Tarefas Pendentes</option>
+                <option value="task_done">Tarefas Realizadas</option>
             </select>
         </div>
         <div class="task_list">
@@ -43,3 +49,24 @@
         </div>
     </section>
 </x-layout>
+
+<script>
+    function changeStatusFilter(e) {
+        showAlltasks()
+        if (e.value === 'task_pending') {
+            document.querySelectorAll('.task_done').forEach(element => {
+                element.style.display = 'none'
+            });
+        } else if (e.value === 'task_done') {
+            document.querySelectorAll('.task_pending').forEach(element => {
+                element.style.display = 'none'
+            });
+        }
+    }
+
+    function showAlltasks() {
+        document.querySelectorAll('.task').forEach(element => {
+            element.style.display = 'block'
+        });
+    }
+</script>
