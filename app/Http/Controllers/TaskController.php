@@ -70,9 +70,9 @@ class TaskController extends Controller
         if (! $task) {
             return 'Tarefa não encontrada';
         }
-        $data = $request->only('title', 'due_date', 'category_id', 'description');
-        $data['is_done'] = $request->is_done ? true : false;
-        $task->update($data);
+        $task->fill($request->only('title', 'due_date', 'category_id', 'description'));
+        $task->is_done = $request->is_done ? true : false;
+        $task->save();
 
         return redirect(route('home.index'));
     }

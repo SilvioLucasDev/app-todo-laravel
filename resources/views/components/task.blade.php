@@ -1,6 +1,12 @@
 <div class="task">
     <div class="title">
-        <input type="checkbox" disabled @if ($data && $data['is_done']) checked @endif />
+        <form id="form_edit_{{ $data['id'] ?? '' }}" method="post" action="{{ route('task.update', $data['id'] ?? '') }}">
+            @csrf
+            @method('PATCH')
+            <input type="checkbox" name="is_done" value="1"
+                onchange="document.getElementById('form_edit_{{ $data['id'] ?? '' }}').submit()"
+                @if ($data && $data['is_done']) checked @endif />
+        </form>
         <div class="task_title">{{ $data['title'] ?? '' }}</div>
     </div>
 
